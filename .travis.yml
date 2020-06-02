@@ -1,0 +1,14 @@
+language: csharp
+mono: none
+dotnet: 3.1.300
+solution: Battle.sln
+install:
+  - sudo pip install codecov
+script:
+  - cd src
+  - dotnet test --collect "XPlat Code Coverage"
+  - cd ../
+after_success:
+  - filepath=`find -type f -name 'coverage.cobertura.xml'`
+  - echo ${filepath}
+  - codecov -f ${filepath} -t ${CODECOV_TOKEN}
