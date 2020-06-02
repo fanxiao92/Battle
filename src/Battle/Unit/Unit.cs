@@ -107,21 +107,21 @@ namespace Battle.Unit
 
 
         /// <summary>
-        /// 获取暴击率
+        /// 获取穿透
         /// </summary>
         /// <returns></returns>
-        public float GetCritChance()
+        public float GetArmorPenetrationPercent()
         {
-            return m_attributeMgr.GetAttribute(AttributeType.CritChance);
+            return m_attributeMgr.GetAttribute(AttributeType.ArmorPenetrationPercent);
         }
 
         /// <summary>
-        /// 获取暴击伤害
+        /// 获取破甲
         /// </summary>
         /// <returns></returns>
-        public float GetCritDamage()
+        public float GetArmorPenetrationFlat()
         {
-            return m_attributeMgr.GetAttribute(AttributeType.CritDamage);
+            return m_attributeMgr.GetAttribute(AttributeType.ArmorPenetrationFlat);
         }
 
         /// <summary>

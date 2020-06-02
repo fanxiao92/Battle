@@ -31,11 +31,11 @@ namespace Battle.Attribute
 		/// </summary>
 		Armor,
 		/// <summary>
-		/// 护甲穿透固定值
+		/// 破甲
 		/// </summary>
 		ArmorPenetrationFlat,
 		/// <summary>
-		/// 护甲穿透百分比
+		/// 穿透
 		/// </summary>
 		ArmorPenetrationPercent,
 		/// <summary>

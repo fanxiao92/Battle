@@ -18,8 +18,6 @@ namespace UnitTests.Unit
             Assert.AreEqual(unit.GetMaxHealth(), 575);
             Assert.AreEqual(unit.GetAttackDamage(), 52);
             Assert.AreEqual(unit.GetArmor(), 34);
-            Assert.AreEqual(unit.GetCritChance(), 0);
-            Assert.AreEqual(unit.GetCritDamage(), 200);
         }
 
         [TestMethod]
