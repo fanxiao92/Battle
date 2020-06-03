@@ -12,6 +12,8 @@ namespace Battle.Spell
             Source = source;
             Target = target;
             InitValue = Source.GetAttackDamage();
+            ChangeRate = 1;
+            ChangeNum = 0;
             //Observer 攻击开始
             //ObServer 被攻击开始
         }
@@ -38,10 +40,10 @@ namespace Battle.Spell
 
             //护甲公式伤害
             ApplyArmorFormula();
-            //乘法伤害公式-加成、减免
-            MulIncreaseAndReduction();
-            //加法伤害公式-加成、减免
-            AddIncreaseAndReduction();
+            //通知单位伤害
+            OnUnitDamage();
+            //应用伤害加成、减免
+            ApplyIncreaseAndReduction();
 
             CurValue = (int)Math.Floor(CurValue);
             float cur_health = Target.GetHealth();
@@ -53,6 +55,16 @@ namespace Battle.Spell
             {
                 Target.AddHealth(-CurValue);
             }
+        }
+
+        private void OnUnitDamage()
+        {
+            CanChange = true;
+            //先计算伤害加成
+            Source.OnDamage(this);
+            //再计算伤害减免
+            Target.OnDamaged(this); 
+            CanChange = false;
         }
 
         /// <summary>
@@ -125,52 +137,49 @@ namespace Battle.Spell
 
 
         /// <summary>
-        /// 乘法伤害公式-增加
+        /// 伤害修改乘法伤害公式-增加
         /// </summary>
         /// <param name="value"></param>
-        void MulIncrease(float value)
+        public void ModifyMulIncrease(float value)
         {
-            ChangeRate *= (1 + value / 100.0f);
+            if (CanChange)
+            {
+				ChangeRate *= (1 + value / 100.0f);
+            }
         }
 
         /// <summary>
-        /// 乘法伤害公式-减免
+        /// 伤害修改乘法公式-减免
         /// </summary>
         /// <param name="value"></param>
-        void MulReduction(float value)
+        public void ModifyMulReduction(float value)
         {
-            ChangeRate *= (1 - value / 100.0f);
+            if (CanChange)
+            {
+				ChangeRate *= (1 - value / 100.0f);
+            }
+        }
+
+		/// <summary>
+        /// 伤害修改加法公式
+        /// </summary>
+        public void ModifyAdd(float value)
+        {
+            if (CanChange)
+            {
+                ChangeNum += value;
+            } 
         }
 
         /// <summary>
-        /// 加法伤害公式-加成
+        /// 应用伤害加成、减免
         /// </summary>
-        void AddIncrease(float value)
+        private void ApplyIncreaseAndReduction()
         {
-            ChangeNum += value; 
-        }
-
-        /// <summary>
-        /// 加法伤害公式-减免
-        /// </summary>
-        void AddReduction(float value)
-        {
-            ChangeNum -= value; 
-        }
-
-        /// <summary>
-        /// 乘法公式伤害加成、减免
-        /// </summary>
-        void MulIncreaseAndReduction()
-        {
+            //优先乘法公式
             CurValue *= ChangeRate;
-        }
 
-        /// <summary>
-        /// 加法伤害公式加成、减免
-        /// </summary>
-        void AddIncreaseAndReduction()
-        {
+            //加法公式
             CurValue += ChangeNum;
         }
 
@@ -218,5 +227,10 @@ namespace Battle.Spell
         /// 伤害值变化
         /// </summary>
         private float ChangeNum { get; set; }
+
+        /// <summary>
+        /// 是否可修改
+        /// </summary>
+        public bool CanChange { get; private set; }
     }
 }

@@ -1,10 +1,10 @@
 ﻿using Battle.Spell;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace UnitTests.Damage
+namespace UnitTests.Buff
 {
     [TestClass]
-    public class DamageTest
+    public class BuffTest
     {
         [TestInitialize]
         public void StartUp()
@@ -14,7 +14,7 @@ namespace UnitTests.Damage
         }
 
         [TestMethod]
-        public void Hit()
+        public void DamageModify()
         {
             var originHealth = target.GetHealth();
             attackContext.OnAttackStart(source, target);
@@ -23,38 +23,30 @@ namespace UnitTests.Damage
             Assert.AreEqual(damageNum, 38);
 
             originHealth = target.GetHealth();
+            target.Buff = new Battle.Buff.Buff();
             attackContext.OnAttackStart(source, target);
-            attackContext.ModifyAdd(10);
             attackContext.OnAttackHit();
             damageNum = originHealth - target.GetHealth();
-            Assert.AreEqual(damageNum, 38);
+            Assert.AreEqual(damageNum, 24);
 
-			originHealth = target.GetHealth();
+            originHealth = target.GetHealth();
+            source.Buff = new Battle.Buff.Buff();
             attackContext.OnAttackStart(source, target);
-            attackContext.ModifyAdd(-10);
-            attackContext.OnAttackHit();
-			damageNum = originHealth - target.GetHealth();
-            Assert.AreEqual(damageNum, 38);
-
-			originHealth = target.GetHealth();
-            attackContext.OnAttackStart(source, target);
-            attackContext.ModifyMulIncrease(10);
             attackContext.OnAttackHit();
             damageNum = originHealth - target.GetHealth();
-            Assert.AreEqual(damageNum, 38);
+            Assert.AreEqual(damageNum, 43);
 
-			originHealth = target.GetHealth();
+            originHealth = target.GetHealth();
+            target.Buff = null;
             attackContext.OnAttackStart(source, target);
-            attackContext.ModifyMulReduction(10);
             attackContext.OnAttackHit();
             damageNum = originHealth - target.GetHealth();
-            Assert.AreEqual(damageNum, 38);
-
+            Assert.AreEqual(damageNum, 57);
         }
 
-
-        private readonly DamageEvent attackContext = new DamageEvent();
-        private readonly Battle.Unit.Unit source = new Battle.Unit.Unit();
-        private readonly Battle.Unit.Unit target = new Battle.Unit.Unit();
+        private Battle.Unit.Unit source = new Battle.Unit.Unit();
+        private Battle.Unit.Unit target = new Battle.Unit.Unit();
+        private DamageEvent attackContext =  new DamageEvent();
+        
     }
 }

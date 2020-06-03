@@ -1,4 +1,6 @@
 ﻿using Battle.Attribute;
+using Battle.Spell;
+using Battle.Buff;
 
 namespace Battle.Unit   
 {
@@ -29,6 +31,8 @@ namespace Battle.Unit
             SetAttribute(AttributeType.CritDamage, 200);
             SetAttribute(AttributeType.AbilityPower, 0);
         }
+
+        #region 属性
 
         /// <summary>
         /// 获取血量值
@@ -138,5 +142,31 @@ namespace Battle.Unit
         /// 单位属性管理
         /// </summary>
         private readonly UnitAttributeManager m_attributeMgr;
+
+        #endregion
+
+        #region 伤害修改事件
+
+        /// <summary>
+        /// 造成伤害
+        /// </summary>
+        public void OnDamage(DamageEvent damageEvent)
+        {
+            Buff?.OnDamage(damageEvent);
+        }
+
+        /// <summary>
+        /// 受到伤害
+        /// </summary>
+        public void OnDamaged(DamageEvent damageEvent)
+        {
+            Buff?.OnDamaged(damageEvent);
+        }
+
+        public Buff.Buff Buff { get; set; }
+
+        #endregion
+
+
     }
 }
