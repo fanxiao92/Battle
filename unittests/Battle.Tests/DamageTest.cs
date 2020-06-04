@@ -9,8 +9,8 @@ namespace UnitTests.Damage
         [TestInitialize]
         public void StartUp()
         {
-            source.Initialize();
-            target.Initialize();
+            source = Battle.Unit.Unit.CreateUnit(world);
+            target = Battle.Unit.Unit.CreateUnit(world);
         }
 
         [TestMethod]
@@ -53,8 +53,9 @@ namespace UnitTests.Damage
         }
 
 
+        private Battle.Unit.Unit source;
+        private Battle.Unit.Unit target;
+        private Battle.World.World world = new Battle.World.World();
         private readonly DamageEvent attackContext = new DamageEvent();
-        private readonly Battle.Unit.Unit source = new Battle.Unit.Unit();
-        private readonly Battle.Unit.Unit target = new Battle.Unit.Unit();
     }
 }

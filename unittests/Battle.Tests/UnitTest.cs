@@ -8,7 +8,7 @@ namespace UnitTests.Unit
         [TestInitialize]
         public void StartUp()
         {
-            unit.Initialize();
+            unit = Battle.Unit.Unit.CreateUnit(world);
         }
 
         [TestMethod]
@@ -33,6 +33,7 @@ namespace UnitTests.Unit
             Assert.AreEqual(unit.GetHealth(), 575);
         }
 
-        private readonly Battle.Unit.Unit unit = new Battle.Unit.Unit();
+        private Battle.Unit.Unit unit;
+        private Battle.World.World world = new Battle.World.World();
     }
 }

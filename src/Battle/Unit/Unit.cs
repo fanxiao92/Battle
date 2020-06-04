@@ -1,37 +1,14 @@
 ﻿using Battle.Attribute;
 using Battle.Spell;
-using Battle.Buff;
 
+//TODO 弹道增加处理
+//TODO 配置文件增加
+//TODO 普通攻击处理 AttackSpeed
+//TODO CreateUnit
 namespace Battle.Unit   
 {
     public class Unit
     {
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        public Unit()
-        {
-            m_attributeMgr = new UnitAttributeManager();
-        }
-
-        /// <summary>
-        /// 初始化
-        /// </summary>
-        public void Initialize()
-        {
-            SetAttribute(AttributeType.MaxHealth, 575);
-            SetAttribute(AttributeType.Health, 575);
-            SetAttribute(AttributeType.MaxMana, 350);
-            SetAttribute(AttributeType.Mana, 350);
-            SetAttribute(AttributeType.AttackDamage, 52);
-            SetAttribute(AttributeType.Armor, 34);
-            SetAttribute(AttributeType.ArmorPenetrationFlat, 0);
-            SetAttribute(AttributeType.ArmorPenetrationPercent, 0);
-            SetAttribute(AttributeType.CritChance, 0);
-            SetAttribute(AttributeType.CritDamage, 200);
-            SetAttribute(AttributeType.AbilityPower, 0);
-        }
-
         #region 属性
 
         /// <summary>
@@ -167,6 +144,73 @@ namespace Battle.Unit
 
         #endregion
 
+        #region 驱动
+
+        /// <summary>
+        /// Tick 驱动
+        /// </summary>
+        /// <param name="deltaTime"></param>
+        public void Tick(float deltaTime)
+        {
+
+        }
+
+        #endregion
+
+        #region 创建单位
+
+        /// <summary>
+        /// 创建单位
+        /// </summary>
+        /// <returns></returns>
+        public static Unit CreateUnit(World.World world)
+        {
+            Unit unit = new Unit();
+            if (!unit.Initialize(world))
+            {
+                return null;
+            }
+            return unit;
+        }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        private Unit()
+        {
+            m_attributeMgr = new UnitAttributeManager();
+        }
+
+        /// <summary>
+        /// 初始化
+        /// </summary>
+        private bool Initialize(World.World world)
+        {
+            SetAttribute(AttributeType.MaxHealth, 575);
+            SetAttribute(AttributeType.Health, 575);
+            SetAttribute(AttributeType.MaxMana, 350);
+            SetAttribute(AttributeType.Mana, 350);
+            SetAttribute(AttributeType.AttackDamage, 52);
+            SetAttribute(AttributeType.Armor, 34);
+            SetAttribute(AttributeType.ArmorPenetrationFlat, 0);
+            SetAttribute(AttributeType.ArmorPenetrationPercent, 0);
+            SetAttribute(AttributeType.CritChance, 0);
+            SetAttribute(AttributeType.CritDamage, 200);
+            SetAttribute(AttributeType.AbilityPower, 0);
+
+            if (!world.AddUnit(this))
+            {
+                return false;
+            }
+            return true;
+        }
+
+        #endregion
+
+        /// <summary>
+        /// 实例 ID
+        /// </summary>
+        public int InstanceId { get; set; }
 
     }
 }
