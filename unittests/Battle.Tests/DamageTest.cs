@@ -1,4 +1,6 @@
-﻿using Battle.Spell;
+﻿using Battle.Enum;
+using Battle.Spell;
+using Battle.Unit;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace UnitTests.Damage
@@ -9,8 +11,8 @@ namespace UnitTests.Damage
         [TestInitialize]
         public void StartUp()
         {
-            source = Battle.Unit.Unit.CreateUnit(world);
-            target = Battle.Unit.Unit.CreateUnit(world);
+            source = (Battle.Unit.Creature)GameObject.Create(world, GameObjectType.Creature, 40);
+            target = (Battle.Unit.Creature)GameObject.Create(world, GameObjectType.Creature, 40);
         }
 
         [TestMethod]
@@ -53,8 +55,8 @@ namespace UnitTests.Damage
         }
 
 
-        private Battle.Unit.Unit source;
-        private Battle.Unit.Unit target;
+        private Battle.Unit.Creature source;
+        private Battle.Unit.Creature target;
         private Battle.World.World world = new Battle.World.World();
         private readonly DamageEvent attackContext = new DamageEvent();
     }

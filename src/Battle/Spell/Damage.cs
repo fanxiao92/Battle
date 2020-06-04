@@ -1,4 +1,5 @@
 using System;
+using Battle.Unit;
 
 namespace Battle.Spell
 {
@@ -7,7 +8,7 @@ namespace Battle.Spell
         /// <summary>
         /// 攻击开始
         /// </summary>
-        public void OnAttackStart(Unit.Unit source, Unit.Unit target)
+        public void OnAttackStart(Creature source, Creature target)
         {
             Source = source;
             Target = target;
@@ -196,12 +197,12 @@ namespace Battle.Spell
         /// <summary>
         /// 攻击者
         /// </summary>
-        private Unit.Unit Source { get; set; }
+        private Creature Source { get; set; }
 
         /// <summary>
         /// 被攻击者
         /// </summary>
-        private Unit.Unit Target { get; set; }
+        private Creature Target { get; set; }
 
         /// <summary>
         /// 被攻击者护甲值

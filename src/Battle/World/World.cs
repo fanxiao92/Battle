@@ -44,38 +44,38 @@ namespace Battle.World
         /// <summary>
         /// Tick 结束时，将单位添加到世界中
         /// </summary>
-        /// <param name="unit"></param>
+        /// <param name="gameObject"></param>
         /// <returns></returns>
-        public bool AddUnit(Unit.Unit unit)
+        public bool AddUnit(Unit.GameObject gameObject)
         {
-            if (unit == null)
+            if (gameObject == null)
             {
                 return false;
             }
 
-            unit.InstanceId = GenerateUnitInstanceId();
-            m_waitAddUnits.Add(unit.InstanceId, unit);
+            gameObject.InstanceId = GenerateUnitInstanceId();
+            m_waitAddUnits.Add(gameObject.InstanceId, gameObject);
             return true;
         }
 
         /// <summary>
         /// 立马将单位添加到世界中
         /// </summary>
-        /// <param name="unit"></param>
+        /// <param name="gameObject"></param>
         /// <returns></returns>
-        private void AddUnitNow(Unit.Unit unit)
+        private void AddUnitNow(Unit.GameObject gameObject)
         {
             
-            m_units.Add(unit.InstanceId, unit);
+            m_units.Add(gameObject.InstanceId, gameObject);
         }
 
         /// <summary>
         /// Tick结束时，将单位从世界中移除
         /// </summary>
-        /// <param name="unit"></param>
-        public void RemoveUnit(Unit.Unit unit)
+        /// <param name="gameObject"></param>
+        public void RemoveUnit(Unit.GameObject gameObject)
         {
-            m_waitRemoveUnitIds.Add(unit.InstanceId);
+            m_waitRemoveUnitIds.Add(gameObject.InstanceId);
         }
 
         /// <summary>
@@ -107,12 +107,12 @@ namespace Battle.World
         /// <summary>
         /// 等待添加的单位
         /// </summary>
-        private Dictionary<int, Unit.Unit> m_waitAddUnits = new Dictionary<int, Unit.Unit>();
+        private Dictionary<int, Unit.GameObject> m_waitAddUnits = new Dictionary<int, Unit.GameObject>();
 
         /// <summary>
         /// 世界中所有单位
         /// </summary>
-        private Dictionary<int, Unit.Unit> m_units = new Dictionary<int, Unit.Unit>();
+        private Dictionary<int, Unit.GameObject> m_units = new Dictionary<int, Unit.GameObject>();
 
         /// <summary>
         /// 等待被移除的单位

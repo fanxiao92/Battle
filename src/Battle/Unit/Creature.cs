@@ -1,15 +1,24 @@
 ﻿using Battle.Attribute;
 using Battle.Spell;
 
-//TODO 弹道增加处理
-//TODO 配置文件增加
-//TODO 普通攻击处理 AttackSpeed
-//TODO CreateUnit
-namespace Battle.Unit   
+namespace Battle.Unit
 {
-    public class Unit
+    /// <summary>
+    /// 单位具有属性值，可死亡
+    /// 单位具有Buff.
+    /// </summary>
+    public class Creature :  GameObject
     {
-        #region 属性
+        #region 驱动
+
+        public override void Tick(float deltaTime)
+        {
+            base.Tick(deltaTime);
+        }
+
+        #endregion
+
+        #region 属性值
 
         /// <summary>
         /// 获取血量值
@@ -118,7 +127,7 @@ namespace Battle.Unit
         /// <summary>
         /// 单位属性管理
         /// </summary>
-        private readonly UnitAttributeManager m_attributeMgr;
+        private readonly UnitAttributeManager m_attributeMgr = new UnitAttributeManager();
 
         #endregion
 
@@ -144,47 +153,8 @@ namespace Battle.Unit
 
         #endregion
 
-        #region 驱动
-
-        /// <summary>
-        /// Tick 驱动
-        /// </summary>
-        /// <param name="deltaTime"></param>
-        public void Tick(float deltaTime)
-        {
-
-        }
-
-        #endregion
-
-        #region 创建单位
-
-        /// <summary>
-        /// 创建单位
-        /// </summary>
-        /// <returns></returns>
-        public static Unit CreateUnit(World.World world)
-        {
-            Unit unit = new Unit();
-            if (!unit.Initialize(world))
-            {
-                return null;
-            }
-            return unit;
-        }
-
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        private Unit()
-        {
-            m_attributeMgr = new UnitAttributeManager();
-        }
-
-        /// <summary>
-        /// 初始化
-        /// </summary>
-        private bool Initialize(World.World world)
+        #region 构建
+        public override bool Initialize(World.World world)
         {
             SetAttribute(AttributeType.MaxHealth, 575);
             SetAttribute(AttributeType.Health, 575);
@@ -198,19 +168,9 @@ namespace Battle.Unit
             SetAttribute(AttributeType.CritDamage, 200);
             SetAttribute(AttributeType.AbilityPower, 0);
 
-            if (!world.AddUnit(this))
-            {
-                return false;
-            }
-            return true;
+            return base.Initialize(world);
         }
-
         #endregion
-
-        /// <summary>
-        /// 实例 ID
-        /// </summary>
-        public int InstanceId { get; set; }
 
     }
 }

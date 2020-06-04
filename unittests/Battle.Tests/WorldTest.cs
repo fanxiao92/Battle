@@ -1,4 +1,6 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Battle.Enum;
+using Battle.Unit;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace UnitTests.World
 {
@@ -8,7 +10,7 @@ namespace UnitTests.World
         [TestMethod]
         public void AddUnit()
         {
-            var unit = Battle.Unit.Unit.CreateUnit(world);
+            var unit = GameObject.Create(world, GameObjectType.Creature, 40);
             Assert.AreEqual(world.UnitCount, 1);
             world.Tick(33);
             world.TickEnd();
