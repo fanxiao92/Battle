@@ -155,8 +155,13 @@ namespace Battle.Unit
         #endregion
 
         #region 构建
-        public override bool Initialize(World.GameWorld gameWorld, Vector2D location, float facing)
+        protected override bool Initialize(World.GameWorld gameWorld, Vector2D location, float facing)
         {
+            if (!base.Initialize(gameWorld, location, facing))
+            {
+                return false;
+            }
+
             SetAttribute(AttributeType.MaxHealth, 575);
             SetAttribute(AttributeType.Health, 575);
             SetAttribute(AttributeType.MaxMana, 350);
@@ -168,8 +173,7 @@ namespace Battle.Unit
             SetAttribute(AttributeType.CritChance, 0);
             SetAttribute(AttributeType.CritDamage, 200);
             SetAttribute(AttributeType.AbilityPower, 0);
-
-            return base.Initialize(gameWorld, location, facing);
+            return true;
         }
         #endregion
 

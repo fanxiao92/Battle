@@ -1,7 +1,8 @@
 ﻿using Battle.Common;
 using Battle.Enum;
+using Battle.Movement;
 
-//TODO 弹道的移动,碰撞处理,造成伤害
+//TODO 碰撞处理,造成伤害
 namespace Battle.Unit
 {
     /// <summary>
@@ -13,6 +14,7 @@ namespace Battle.Unit
         public override void Tick(float deltaTime)
         {
             base.Tick(deltaTime);
+            movePathLine.Tick(deltaTime);
         }
 
         #endregion
@@ -46,16 +48,22 @@ namespace Battle.Unit
         /// <param name="location"></param>
         /// <param name="facing"></param>
         /// <returns></returns>
-        public override bool Initialize(World.GameWorld gameWorld, Vector2D location, float facing)
+        protected override bool Initialize(World.GameWorld gameWorld, Vector2D location, float facing)
         {
             if (!base.Initialize(gameWorld, location, facing))
             {
                 return false;
             }
 
+            movePathLine.Initialize(this);
             return true;
         }
 
         #endregion
+
+        /// <summary>
+        /// 直线运动
+        /// </summary>
+        private SpecialMovePathLine movePathLine = new SpecialMovePathLine();
     }
 }

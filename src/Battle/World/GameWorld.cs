@@ -1,3 +1,4 @@
+using Battle.Unit;
 using System.Collections.Generic;
 
 namespace Battle.World
@@ -29,13 +30,13 @@ namespace Battle.World
 
             foreach (var unitId in m_waitRemoveUnitIds)
             {
-                RemoveUnitNow(unitId);
+                RemoveGameObjectNow(unitId);
             }    
             m_waitRemoveUnitIds.Clear();
 
             foreach (var unit in m_waitAddUnits)
             {
-               AddUnitNow(unit.Value); 
+               AddGameObjectNow(unit.Value); 
             }
             m_waitAddUnits.Clear();
         }
@@ -45,11 +46,11 @@ namespace Battle.World
         #region 单位
 
         /// <summary>
-        /// Tick 结束时，将单位添加到世界中
+        /// Tick 结束时，将游戏对象添加到世界中
         /// </summary>
         /// <param name="gameObject"></param>
         /// <returns></returns>
-        public bool AddUnit(Unit.GameObject gameObject)
+        public bool AddGameObject(GameObject gameObject)
         {
             if (gameObject == null)
             {
@@ -62,30 +63,29 @@ namespace Battle.World
         }
 
         /// <summary>
-        /// 立马将单位添加到世界中
+        /// 立马将游戏对象添加到世界中
         /// </summary>
         /// <param name="gameObject"></param>
         /// <returns></returns>
-        private void AddUnitNow(Unit.GameObject gameObject)
+        private void AddGameObjectNow(GameObject gameObject)
         {
-            
             m_units.Add(gameObject.InstanceId, gameObject);
         }
 
         /// <summary>
-        /// Tick结束时，将单位从世界中移除
+        /// Tick结束时，将游戏对象从世界中移除
         /// </summary>
         /// <param name="gameObject"></param>
-        public void RemoveUnit(Unit.GameObject gameObject)
+        public void RemoveGameObject(GameObject gameObject)
         {
             m_waitRemoveUnitIds.Add(gameObject.InstanceId);
         }
 
         /// <summary>
-        /// 立马将单位从世界中移除
+        /// 立马将游戏对象从世界中移除
         /// </summary>
         /// <param name="unitId"></param>
-        private void RemoveUnitNow(int unitId)
+        private void RemoveGameObjectNow(int unitId)
         {
             if (!m_units.Remove(unitId))
             {
@@ -110,12 +110,12 @@ namespace Battle.World
         /// <summary>
         /// 等待添加的单位
         /// </summary>
-        private Dictionary<int, Unit.GameObject> m_waitAddUnits = new Dictionary<int, Unit.GameObject>();
+        private Dictionary<int, GameObject> m_waitAddUnits = new Dictionary<int, GameObject>();
 
         /// <summary>
         /// 世界中所有单位
         /// </summary>
-        private Dictionary<int, Unit.GameObject> m_units = new Dictionary<int, Unit.GameObject>();
+        private Dictionary<int, GameObject> m_units = new Dictionary<int, GameObject>();
 
         /// <summary>
         /// 等待被移除的单位
@@ -123,9 +123,9 @@ namespace Battle.World
         private HashSet<int> m_waitRemoveUnitIds = new HashSet<int>();
 
         /// <summary>
-        /// 世界中的单位总量
+        /// 世界中的游戏对象数量
         /// </summary>
-        public int UnitCount => m_waitAddUnits.Count + m_units.Count;
+        public int GameObjectCount => m_waitAddUnits.Count + m_units.Count;
         #endregion
 
     }

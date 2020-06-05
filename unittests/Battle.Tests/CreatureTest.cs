@@ -1,9 +1,10 @@
 using Battle.Common;
 using Battle.Enum;
 using Battle.Unit;
+using Battle.World;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace UnitTests.Creature
+namespace UnitTests.Unit
 {
     [TestClass]
     public class CreatureTest
@@ -11,7 +12,7 @@ namespace UnitTests.Creature
         [TestInitialize]
         public void StartUp()
         {
-            creature = (Battle.Unit.Creature)GameObject.Create(_gameWorld, GameObjectType.Creature, location, 40);
+            creature = (Creature)GameObject.Create(_gameWorld, GameObjectType.Creature, location, 40);
         }
 
         [TestMethod]
@@ -36,8 +37,8 @@ namespace UnitTests.Creature
             Assert.AreEqual(creature.GetHealth(), 575);
         }
 
-        private Battle.Unit.Creature creature;
-        private Battle.World.GameWorld _gameWorld = new Battle.World.GameWorld();
+        private Creature creature;
+        private GameWorld _gameWorld = new GameWorld();
         private Vector2D location = new Vector2D(0, 0);
     }
 }

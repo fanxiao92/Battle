@@ -13,15 +13,15 @@ namespace UnitTests.World
         public void AddUnit()
         {
             var unit = GameObject.Create(gameWorld, GameObjectType.Creature, location, 40);
-            Assert.AreEqual(gameWorld.UnitCount, 1);
+            Assert.AreEqual(gameWorld.GameObjectCount, 1);
             gameWorld.Tick(33);
             gameWorld.TickEnd();
-            Assert.AreEqual(gameWorld.UnitCount, 1);
-            gameWorld.RemoveUnit(unit);
-            Assert.AreEqual(gameWorld.UnitCount, 1);
+            Assert.AreEqual(gameWorld.GameObjectCount, 1);
+            gameWorld.RemoveGameObject(unit);
+            Assert.AreEqual(gameWorld.GameObjectCount, 1);
             gameWorld.Tick(33);
             gameWorld.TickEnd();
-            Assert.AreEqual(gameWorld.UnitCount, 0);
+            Assert.AreEqual(gameWorld.GameObjectCount, 0);
         }
 
         private GameWorld gameWorld = new GameWorld();

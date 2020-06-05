@@ -3,6 +3,7 @@
 
 using Battle.Common;
 using Battle.Enum;
+using Battle.World;
 
 namespace Battle.Unit   
 {
@@ -35,7 +36,7 @@ namespace Battle.Unit
         /// <param name="location"></param>
         /// <param name="facing"></param>
         /// <returns></returns>
-        public static GameObject Create(World.GameWorld gameWorld, GameObjectType gameObjectType, Vector2D location,
+        public static GameObject Create(GameWorld gameWorld, GameObjectType gameObjectType, Vector2D location,
             float facing)
         {
             var gameObject = GameObjectFactory.CreateGameObject(gameObjectType);
@@ -49,13 +50,14 @@ namespace Battle.Unit
         /// <summary>
         /// 初始化
         /// </summary>
-        public virtual bool Initialize(World.GameWorld gameWorld, Vector2D location, float facing)
+        protected virtual bool Initialize(GameWorld gameWorld, Vector2D location, float facing)
         {
-            if (!gameWorld.AddUnit(this))
+            if (!gameWorld.AddGameObject(this))
             {
                 return false;
             }
 
+            GameWorld = gameWorld;
             Location = location;
             Facing = facing;
             return true;
@@ -64,10 +66,17 @@ namespace Battle.Unit
         #endregion
 
         /// <summary>
+        /// 将其添加到删除队列
+        /// </summary>
+        public void Remove()
+        {
+            GameWorld.RemoveGameObject(this);
+        }
+
+        /// <summary>
         /// 实例 ID
         /// </summary>
         public int InstanceId { get; set; }
-
 
         /// <summary>
         /// 朝向
@@ -83,5 +92,10 @@ namespace Battle.Unit
         /// 对象在世界中的位置
         /// </summary>
         public Vector2D Location { get; set; }
+
+        /// <summary>
+        /// 游戏对象所在世界
+        /// </summary>
+        public GameWorld GameWorld { get; private set; }
     }
 }
