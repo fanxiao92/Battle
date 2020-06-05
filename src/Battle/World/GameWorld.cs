@@ -2,7 +2,10 @@ using System.Collections.Generic;
 
 namespace Battle.World
 {
-    public class World
+    /// <summary>
+    /// 游戏世界，
+    /// </summary>
+    public class GameWorld
     {
 
         #region 驱动

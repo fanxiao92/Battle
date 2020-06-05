@@ -1,6 +1,7 @@
 ﻿//TODO 配置文件增加
 //TODO 普通攻击处理 AttackSpeed
 
+using Battle.Common;
 using Battle.Enum;
 
 namespace Battle.Unit   
@@ -29,13 +30,16 @@ namespace Battle.Unit
         /// <summary>
         /// 创建游戏对象
         /// </summary>
+        /// <param name="gameWorld"></param>
+        /// <param name="gameObjectType"></param>
+        /// <param name="location"></param>
+        /// <param name="facing"></param>
         /// <returns></returns>
-        public static GameObject Create(World.World world, GameObjectType gameObjectType, float facing)
+        public static GameObject Create(World.GameWorld gameWorld, GameObjectType gameObjectType, Vector2D location,
+            float facing)
         {
             var gameObject = GameObjectFactory.CreateGameObject(gameObjectType);
-            gameObject.Facing = facing;
-
-            if (!gameObject.Initialize(world))
+            if (!gameObject.Initialize(gameWorld, location, facing))
             {
                 return null;
             }
@@ -45,13 +49,15 @@ namespace Battle.Unit
         /// <summary>
         /// 初始化
         /// </summary>
-        public virtual bool Initialize(World.World world)
+        public virtual bool Initialize(World.GameWorld gameWorld, Vector2D location, float facing)
         {
-
-            if (!world.AddUnit(this))
+            if (!gameWorld.AddUnit(this))
             {
                 return false;
             }
+
+            Location = location;
+            Facing = facing;
             return true;
         }
 
@@ -72,5 +78,10 @@ namespace Battle.Unit
         /// 所有者
         /// </summary>
         public Creature Owner { get; set; }
+
+        /// <summary>
+        /// 对象在世界中的位置
+        /// </summary>
+        public Vector2D Location { get; set; }
     }
 }

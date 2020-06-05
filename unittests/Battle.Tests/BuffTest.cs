@@ -1,4 +1,5 @@
-﻿using Battle.Enum;
+﻿using Battle.Common;
+using Battle.Enum;
 using Battle.Spell;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -10,8 +11,8 @@ namespace UnitTests.Buff
         [TestInitialize]
         public void StartUp()
         {
-            source =(Battle.Unit.Creature)Battle.Unit.GameObject.Create(world, GameObjectType.Creature, 40);
-            target = (Battle.Unit.Creature)Battle.Unit.GameObject.Create(world, GameObjectType.Creature, 40);
+            source =(Battle.Unit.Creature)Battle.Unit.GameObject.Create(_gameWorld, GameObjectType.Creature, location, 40);
+            target = (Battle.Unit.Creature)Battle.Unit.GameObject.Create(_gameWorld, GameObjectType.Creature, location, 40);
         }
 
         [TestMethod]
@@ -47,8 +48,9 @@ namespace UnitTests.Buff
 
         private Battle.Unit.Creature source;
         private Battle.Unit.Creature target;
-        private Battle.World.World world = new Battle.World.World();
+        private Battle.World.GameWorld _gameWorld = new Battle.World.GameWorld();
         private DamageEvent attackContext =  new DamageEvent();
+        private Vector2D location = new Vector2D(0, 0);
         
     }
 }

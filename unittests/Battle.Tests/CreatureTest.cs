@@ -1,3 +1,4 @@
+using Battle.Common;
 using Battle.Enum;
 using Battle.Unit;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -10,7 +11,7 @@ namespace UnitTests.Creature
         [TestInitialize]
         public void StartUp()
         {
-            creature = (Battle.Unit.Creature)GameObject.Create(world, GameObjectType.Creature, 40);
+            creature = (Battle.Unit.Creature)GameObject.Create(_gameWorld, GameObjectType.Creature, location, 40);
         }
 
         [TestMethod]
@@ -36,6 +37,7 @@ namespace UnitTests.Creature
         }
 
         private Battle.Unit.Creature creature;
-        private Battle.World.World world = new Battle.World.World();
+        private Battle.World.GameWorld _gameWorld = new Battle.World.GameWorld();
+        private Vector2D location = new Vector2D(0, 0);
     }
 }

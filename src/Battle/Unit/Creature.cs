@@ -1,4 +1,5 @@
 ﻿using Battle.Attribute;
+using Battle.Common;
 using Battle.Spell;
 
 namespace Battle.Unit
@@ -154,7 +155,7 @@ namespace Battle.Unit
         #endregion
 
         #region 构建
-        public override bool Initialize(World.World world)
+        public override bool Initialize(World.GameWorld gameWorld, Vector2D location, float facing)
         {
             SetAttribute(AttributeType.MaxHealth, 575);
             SetAttribute(AttributeType.Health, 575);
@@ -168,7 +169,7 @@ namespace Battle.Unit
             SetAttribute(AttributeType.CritDamage, 200);
             SetAttribute(AttributeType.AbilityPower, 0);
 
-            return base.Initialize(world);
+            return base.Initialize(gameWorld, location, facing);
         }
         #endregion
 
